@@ -57,7 +57,8 @@ ENV TCZ_DEPS        iptables \
                     xz liblzma \
                     git expat2 libiconv libidn libgpg-error libgcrypt libssh2 \
                     nfs-utils tcp_wrappers portmap rpcbind libtirpc \
-                    curl ntpclient
+                    curl ntpclient \
+                    procps glib2 libtirpc libffi
 
 # Make the ROOTFS
 RUN mkdir -p $ROOTFS
@@ -81,7 +82,7 @@ RUN cd $ROOTFS/lib/modules && \
     rm -rf ./*/kernel/net/wireless/*
 
 # Install libcap
-RUN curl -L ftp://ftp.de.debian.org/debian/pool/main/libc/libcap2/libcap2_2.22.orig.tar.gz | tar -C / -xz && \
+RUN curl -L http://ftp.de.debian.org/debian/pool/main/libc/libcap2/libcap2_2.22.orig.tar.gz | tar -C / -xz && \
     cd /libcap-2.22 && \
     sed -i 's/LIBATTR := yes/LIBATTR := no/' Make.Rules && \
     sed -i 's/\(^CFLAGS := .*\)/\1 -m32/' Make.Rules && \
@@ -118,6 +119,12 @@ ADD rootfs/make_iso.sh /
 
 # Copy over out custom rootfs
 ADD rootfs/rootfs $ROOTFS
+
+# add libdnet:
+ADD libdnet.tgz $ROOTFS/
+
+# add open-vm-tools:
+ADD open-vm-tools.tgz $ROOTFS/
 
 # Make sure init scripts are executable
 RUN find $ROOTFS/etc/rc.d/ -exec chmod +x {} \; && \
