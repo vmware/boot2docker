@@ -72,3 +72,6 @@ fi
 # Execute automated_script
 # disabled - this script was written assuming bash, which we no longer have.
 #/etc/rc.d/automated_script.sh
+
+# Launch vmware-tools
+/etc/rc.d/vmtoolsd
