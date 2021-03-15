@@ -1,3 +1,5 @@
+# VMware has ended active development of this project, this repository will no longer be updated.
+
 # Boot2Docker
 
 Boot2Docker is a lightweight Linux distribution made specifically to run
